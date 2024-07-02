@@ -1,0 +1,6 @@
+﻿id,story,action_code,action_description
+1,Customer made a large purchase at a retail store.,2,Notify customer about account balance
+2,Account balance fell below threshold.,1,Flag transaction as suspicious
+3,Suspicious login attempt detected.,3,Alert security team about suspicious login attempt
+4,Transaction declined due to insufficient funds.,1,Flag transaction as suspicious
+5,Credit card payment overdue.,4,Send reminder for overdue credit card payment

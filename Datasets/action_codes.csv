@@ -1,0 +1,6 @@
+﻿id,action_code,action_description
+1,2,Notify customer about account balance
+2,3,Alert security team about suspicious login attempt
+3,4,Send reminder for overdue credit card payment
+4,1,Flag transaction as suspicious
+5,1,Flag transaction as declined due to insufficient funds
