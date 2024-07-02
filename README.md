@@ -10,18 +10,7 @@
 - **Integration Ready**: Designed to integrate seamlessly with existing banking systems through secure APIs.
 - **Real-time Monitoring**: Provides real-time monitoring and alerts for detected events.
 - **Security Focused**: Ensures data privacy and security through robust encryption and access controls.
-
-## Getting Started
-
-1. **Clone the Repository**:
-    ```bash
-    git clone https://github.com/MalakMohameed/Smart-Text-Action.git
-    ```
-2. **Run the Application**:
-    ```bash
-    python main.py
-    ```
-
+  
 ## Usage
 
 - **Text Detection**: Monitor and analyze text data in real-time.
