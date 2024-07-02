@@ -15,7 +15,7 @@
 
 1. **Clone the Repository**:
     ```bash
-    git clone 
+    git clone https://github.com/MalakMohameed/Smart-Text-Action.git
     ```
 2. **Install Dependencies**:
     ```bash
