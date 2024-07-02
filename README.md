@@ -17,13 +17,7 @@
     ```bash
     git clone https://github.com/MalakMohameed/Smart-Text-Action.git
     ```
-2. **Install Dependencies**:
-    ```bash
-    cd BankTextGuard
-    pip install -r requirements.txt
-    ```
-3. **Configure Settings**: Update the configuration file with your banking system's integration details and customize detection rules.
-4. **Run the Application**:
+2. **Run the Application**:
     ```bash
     python main.py
     ```
