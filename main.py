@@ -1,38 +1,28 @@
 import pandas as pd
-import re
-import nltk
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
+import nltk
+from nltk.tokenize import word_tokenize
+import arabic_reshaper
+from bidi.algorithm import get_display
 
-# datasets
-stories_file = "Datasets\\customer_stories.csv"
-actions_file = "Datasets\\action_codes.csv"
+# Load data
+data = pd.read_csv('Datasets\\customer_stories.csv')  # Replace with your data file
 
-stories = pd.read_csv(stories_file)
-actions = pd.read_csv(actions_file)
+# Preprocess Arabic text
+nltk.download('punkt')
 
-#just to see if the data is being loaded  correctly 
-#######################################3
-# print("Customer Stories Data:")
-# print(stories.head())
-# print("\nAction Codes Data:")
-# print(actions.head())
+def preprocess_arabic_text(text):
+    reshaped_text = arabic_reshaper.reshape(text)
+    bidi_text = get_display(reshaped_text)
+    tokens = word_tokenize(bidi_text)
+    return ' '.join(tokens)
 
-data = pd.merge(stories, actions, on='id')
+data['story'] = data['story'].apply(preprocess_arabic_text)
 
-# print("\nMerged Data:")
-# print(data.head())
-#####################################
-
-
-
-# Check if 'action_code' column exists
-if 'action_code' not in data.columns:
-    raise KeyError("The 'action_code' column is missing from the merged data.")
-
-# Preprocess data
+# Extract features and labels
 X = data['story']  # Stories or narratives about bank account events
 y = data['action_code']  # Action codes indicating what action was taken
 
@@ -53,40 +43,44 @@ y_pred = model.predict(X_test)
 # Evaluate model
 #print(classification_report(y_test, y_pred))
 
-# Prediction fucntion
-def predict_action(new_story):
-    new_story_vect = vectorizer.transform([new_story])
-    predicted_code = model.predict(new_story_vect)[0]
-    action_description = actions[actions['action_code'] == predicted_code]['action_description'].values[0]
+# Function to predict action for a new story
+def predict_action(story):
+    story_preprocessed = preprocess_arabic_text(story)
+    story_vect = vectorizer.transform([story_preprocessed])
+    predicted_code = model.predict(story_vect)[0]
+    action_description = action_codes.loc[action_codes['action_code'] == predicted_code, 'action_description'].values[0]
     return predicted_code, action_description
 
-# Example usage
+# Load action codes (English descriptions)
+action_codes = pd.read_csv('Datasets\\action_codes.csv')  # Replace with your action codes file
 
-story1 = "Customer's credit card was declined during an international purchase."
-story2 = "Customer reported unauthorized transaction on their account."
-story3 = "Customer's account balance fell below the minimum required threshold."
-story4 = "Customer made a large purchase at a luxury store."
-story5 = "There was a suspicious login attempt from a foreign IP address."
-story6 = "Customer's debit card was used in a different state."
-story7 = "Customer received a notification about an overdue credit card payment."
-story8 = "Transaction declined due to insufficient funds."
-story9 = "Customer's account was flagged for potential fraudulent activity."
-story10 = "Customer's credit card payment was missed for the last billing cycle."
-
-def print_pre(story):
+# Test the model with multiple stories
+def print_prediction(story):
     predicted_code, action_description = predict_action(story)
     print(f"Story: {story}")
     print(f"Predicted Action Code: {predicted_code}, Action Description: {action_description}")
     print()
 
+# Define the stories (in Arabic)
+story1 = "تم رفض بطاقة الائتمان الخاصة بالعميل أثناء عملية شراء دولية."
+story2 = "أبلغ العميل عن معاملة غير مصرح بها على حسابه."
+story3 = "انخفض رصيد حساب العميل إلى أقل من الحد الأدنى المطلوب."
+story4 = "قام العميل بعملية شراء كبيرة في متجر فاخر."
+story5 = "كان هناك محاولة تسجيل دخول مشبوهة من عنوان IP أجنبي."
+story6 = "استخدمت بطاقة الخصم الخاصة بالعميل في دولة مختلفة."
+story7 = "تلقى العميل إشعارًا بشأن دفع بطاقة الائتمان المتأخرة."
+story8 = "تم رفض المعاملة بسبب نقص الأموال."
+story9 = "تم وضع علامة على حساب العميل للنشاط الاحتيالي المحتمل."
+story10 = "فات العميل سداد فاتورة بطاقة الائتمان لدورة الفوترة الأخيرة."
+
 # Predict and print actions for each story
-print_pre(story1)
-print_pre(story2)
-print_pre(story3)
-print_pre(story4)
-print_pre(story5)
-print_pre(story6)
-print_pre(story7)
-print_pre(story8)
-print_pre(story9)
-print_pre(story10)
+print_prediction(story1)
+print_prediction(story2)
+print_prediction(story3)
+print_prediction(story4)
+print_prediction(story5)
+print_prediction(story6)
+print_prediction(story7)
+print_prediction(story8)
+print_prediction(story9)
+print_prediction(story10)
