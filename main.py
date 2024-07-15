@@ -2,8 +2,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.multioutput import MultiOutputClassifier
-from sklearn.metrics import classification_report
-from sklearn.model_selection import train_test_split, cross_val_score, KFold
+from sklearn.model_selection import train_test_split
 import nltk
 from nltk.tokenize import word_tokenize
 import arabic_reshaper
@@ -16,7 +15,9 @@ data = pd.read_csv('Datasets/customer_stories.csv')  # Replace with your data fi
 nltk.download('punkt')
 
 def preprocess_arabic_text(text):
-    reshaped_text = arabic_reshaper.reshape(text)
+    if pd.isna(text):
+        text = ''  # Handle NaN values by replacing them with an empty string
+    reshaped_text = arabic_reshaper.reshape(str(text))  # Ensure the text is a string
     bidi_text = get_display(reshaped_text)
     tokens = word_tokenize(bidi_text)
     return ' '.join(tokens)
@@ -60,7 +61,7 @@ def predict_actions(story):
     return [inverse_action_code_map[code] for code in predicted_codes]
 
 # Load the new stories CSV file
-new_stories = pd.read_csv('Datasets/Book1.csv')  
+new_stories = pd.read_csv('Datasets/Sheet1.csv')  
 
 # Initialize lists to store the predicted codes
 predicted_action_code1 = []
