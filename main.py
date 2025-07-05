@@ -61,7 +61,7 @@ def predict_actions(story):
     return [inverse_action_code_map[code] for code in predicted_codes]
 
 # Load the new stories CSV file
-new_stories = pd.read_csv('Datasets/Sheet1.csv')  
+new_stories = pd.read_csv('Datasets/Sheet2.csv')  
 
 # Initialize lists to store the predicted codes
 predicted_action_code1 = []
@@ -81,6 +81,6 @@ new_stories['predicted_action_code2'] = predicted_action_code2
 new_stories['predicted_action_code3'] = predicted_action_code3
 
 # Save the results to a new CSV file
-new_stories.to_csv('Datasets/new_stories.csv', index=False)  
+new_stories.to_csv('Datasets/Sheet2(Predictions).csv', index=False)  
 
-print("Predictions saved to new_stories.csv")
+print("Predictions saved to Sheet2(Predictions).csv")
