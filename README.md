@@ -1,4 +1,4 @@
-# Smart Text Action Model 
+# Zakiya
 
 **BankTextGuard** is a simple AI-driven text detection system designed to automate actions for specific accounts within a banking system. This project leverages Natural Language Processing (NLP) and Machine Learning to analyze text data related to banking transactions and account activities, triggering predefined actions based on detected patterns and keywords.
 
